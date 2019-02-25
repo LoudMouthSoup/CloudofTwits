@@ -27,8 +27,10 @@ class APIcred:
 			if CONSUMER_KEY == "":
 				print("You must enter the Consumer Key!")
 			else:
-				print ("You have entered a Consumer Key of: ", CONSUMER_KEY)
-				break
+				print ("Consumer Key: ", CONSUMER_KEY)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
 		self.CONSUMER_KEY = CONSUMER_KEY
 
 	def get_Consumer_Secret(self):
@@ -37,8 +39,10 @@ class APIcred:
 			if CONSUMER_SECRET == '':
 				print("You must enter a Consumer Secret!")
 			else:
-				print ("You have entered a Consumer Secret of: ", CONSUMER_SECRET)
-				break
+				print ("Consumer Secret: ", CONSUMER_SECRET)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
 		self.CONSUMER_SECRET = CONSUMER_SECRET
 
 	def get_Access_Token(self):
@@ -54,8 +58,16 @@ class APIcred:
 		self.ACCESS_TOKEN = ACCESS_TOKEN
 
 	def get_Access_Secret(self):
-		self.ACCESS_SECRET = input('\nEnter your Access Secret: ')
-		return ACCESS_SECRET
+		while 1:
+			ACCESS_SECRET = input('\nEnter your Access Secret: ')
+			if ACCESS_SECRET == '':
+				print('You must enter an Access Secret!')
+			else:
+				print('Access Secret: ', ACCESS_SECRET)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
+		self.ACCESS_SECRET = ACCESS_SECRET
 
 	def encrypt_input(self, input_data):
 		padding = '{'
@@ -112,19 +124,11 @@ if __name__ == '__main__':
 	print(banner())
 	cred = APIcred()
 	cred.get_Filepath()	
-	cred.get_Consumer_Key()	
+	cred.get_Consumer_Key()
+	cred.get_Consumer_Secret()	
 	cred.get_Access_Token()
+	cred.get_Access_Secret()
 	
-
-	APIcred.get_Consumer_Secret
-	APIcred.get_Access_Token
-	APIcred.get_Access_Secret
-
-
-
-#print(APIcred.get_Consumer_Key)
-
-
 
 
 #	CONSUMER_KEY_input = input('Enter your Consumer Key: ')
