@@ -1,10 +1,12 @@
-import pycrypto as pc
+#!~/Git/Cloudoftwits/ python
+
+#import pycrypto as pc
 import pyfiglet
 from Crypto.Cipher import AES
 from Crypto import Random
 
 
-class APIkey():
+class APIcred:
 	"""
 	attributes of an API key:
 	name - to identify what type of key it is
@@ -13,26 +15,46 @@ class APIkey():
 	where to store the key???
 	"""
 
-	def __init__(self, CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET):
-		self.CONSUMER_KEY = CONSUMER_KEY
-		self.CONSUMER_SECRET = CONSUMER_SECRET
-		self.ACCESS_TOKEN = ACCESS_TOKEN
-		self.ACCESS_SECRET = ACCESS_SECRET
+	def __init__(self):
+		self.CONSUMER_KEY = ''
+		self.CONSUMER_SECRET = ''
+		self.ACCESS_TOKEN = ''
+		self.ACCESS_SECRET = ''
 
 	def get_Consumer_Key(self):
-		self.CONSUMER_KEY = input('Enter your Consumer Key: ')
-		return CONSUMER_KEY
+		while 1:
+			CONSUMER_KEY = input('\nEnter your Consumer Key: ')
+			if CONSUMER_KEY == "":
+				print("You must enter the Consumer Key!")
+			else:
+				print ("You have entered a Consumer Key of: ", CONSUMER_KEY)
+				break
+		self.CONSUMER_KEY = CONSUMER_KEY
 
 	def get_Consumer_Secret(self):
-		self.CONSUMER_SECRET = input('Enter your Consumer Secret: ')
-		return CONSUMER_SECRET
+		while 1:
+			CONSUMER_SECRET = input('\nEnter your Consumer Secret: ')
+			if CONSUMER_SECRET == '':
+				print("You must enter a Consumer Secret!")
+			else:
+				print ("You have entered a Consumer Secret of: ", CONSUMER_SECRET)
+				break
+		self.CONSUMER_SECRET = CONSUMER_SECRET
 
 	def get_Access_Token(self):
-		self.ACCESS_TOKEN = input('Enter your Access Token: ')
-		return ACCESS_TOKEN
+		while 1:
+			ACCESS_TOKEN = input('\nEnter your Access Token: ')
+			if ACCESS_TOKEN == '':
+				print('You must enter an Access Token!')
+			else:
+				print('Access Token: ', ACCESS_TOKEN)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
+		self.ACCESS_TOKEN = ACCESS_TOKEN
 
 	def get_Access_Secret(self):
-		self.ACCESS_SECRET = input('Enter your Access Secret: ')
+		self.ACCESS_SECRET = input('\nEnter your Access Secret: ')
 		return ACCESS_SECRET
 
 	def encrypt_input(self, input_data):
@@ -41,6 +63,15 @@ class APIkey():
 		cipher = AES.new(key, AES.MODE_CFB, iv)
 		self.input_data = iv + cipher.encrypt(b'input')
 		return input_data
+
+	def get_Filepath(self):
+		FILEPATH = input("\nEnter the path where you would like "
+				  "to save your encrypted credentials. \n"
+				  "(OR Press Enter to save to ~/Documents/creds/cot.txt): ")
+		if FILEPATH == '':
+			self.FILEPATH = '~/Documents/creds/cot.txt'
+		else:
+			self.FILEPATH = FILEPATH 
 
 
 
@@ -53,38 +84,46 @@ if __name__ == '__main__':
 #	cipher = AES.new(key, AES.MODE_CFB, iv)
 #	self.input = iv + cipher.encrypt(b'input')
 
-	print("")
-
-	print(pyfiglet.figlet_format("                                @   ", font = "octal"))
-	print(pyfiglet.figlet_format("                            @     @   ", font = "octal"))
-	print(pyfiglet.figlet_format("                    @                     @   ", font = "octal"))
-
-	print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
-	print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
-	result = pyfiglet.figlet_format("@  Cloud of Twits    @", font = "tombstone")
-	print(result)
-	print("by")
-	print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
-	print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
-	print(pyfiglet.figlet_format("@ Loud Mouth Soup @", font = "cybersmall"))
-	print("\n   Welcome to Cloud of Twits \n\n"
-		  "   In this configuration file you will setup and encrypt your API keys. You must \n"
-		  "   have the folling modules installed to run this program:\n"
+	def banner():
+		print("")
+		print(pyfiglet.figlet_format("                                @   ", font = "octal"))
+		print(pyfiglet.figlet_format("                            @     @   ", font = "octal"))
+		print(pyfiglet.figlet_format("                    @                     @   ", font = "octal"))
+		print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
+		print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
+		result = pyfiglet.figlet_format("@  Cloud of Twits    @", font = "tombstone")
+		print(result)
+		print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
+		print(pyfiglet.figlet_format("@     Loud Mouth Soup    @", font = "octal"))
+		print("by")
+		print(pyfiglet.figlet_format("@ Loud Mouth Soup @", font = "cybersmall"))
+		print("\nWelcome to Cloud of Twits \n\n"
+		  "In this configuration file you will setup and encrypt your API keys.\n"
+		  "You must have the folling modules installed to run this program:\n"
 		  "   \n"
-		  "		pip3 install pycrypto os tweepy numpy pandas matplotlib textblob \n\n"
-		  "   You will need to configure your API keys from twitter for this program \n"
-		  "   to run.  (See readme for instructions on how to set up a Twitter API) \n"
-		  "   Enter the information below: \n\n"
-
-
-
-	print("Please enter your Twitter API keys here, your keys will be encrpyted \n"
+		  "	pip3 install pycrypto os tweepy numpy pandas matplotlib textblob \n\n"
+		  "You will need to configure your API keys from twitter for this program \n"
+		  "to run.  (See readme for instructions on how to set up a Twitter API) \n"
+		  "\n")
+		print("Please enter your Twitter API keys here, your keys will be encrpyted \n"
 		  "and saved to a file. \n\n")
 
-	APIkey.get_Consumer_Key()
-	APIkey.get_Consumer_Secret()
-	APIkey.get_Access_Token()
-	APIkey.get_Access_Secret()
+
+	print(banner())
+	cred = APIcred()
+	cred.get_Filepath()	
+	cred.get_Consumer_Key()	
+	cred.get_Access_Token()
+	
+
+	APIcred.get_Consumer_Secret
+	APIcred.get_Access_Token
+	APIcred.get_Access_Secret
+
+
+
+#print(APIcred.get_Consumer_Key)
+
 
 
 
