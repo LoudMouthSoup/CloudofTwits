@@ -6,96 +6,50 @@ from Crypto.Cipher import AES
 from Crypto import Random
 
 
-class APIcred:
-	"""
-	attributes of an API key:
-	name - to identify what type of key it is
-	input_data - to assign a plain text value to the key
-	encrypted key - the result of encrypting the key
-	where to store the key???
-	"""
+#class APIcred:
+"""
+attributes of an API key:
+name - to identify what type of key it is
+input_data - to assign a plain text value to the key
+encrypted key - the result of encrypting the key
+where to store the key??? Strictly speaking, 
+references to names in modules are attribute 
+references: in the expression 
 
-	def __init__(self):
-		self.CONSUMER_KEY = ''
-		self.CONSUMER_SECRET = ''
-		self.ACCESS_TOKEN = ''
-		self.ACCESS_SECRET = ''
+modname.funcname, modname 
 
-	def get_Consumer_Key(self):
-		while 1:
-			CONSUMER_KEY = input('\nEnter your Consumer Key: ')
-			if CONSUMER_KEY == "":
-				print("You must enter the Consumer Key!")
-			else:
-				print ("Consumer Key: ", CONSUMER_KEY)
-				confirm = input('Is this correct? (Y / N): ')
-				if confirm == 'Y' or confirm == 'y':
-					break
-		self.CONSUMER_KEY = CONSUMER_KEY
+is a module object and funcname is an attribute of it.
 
-	def get_Consumer_Secret(self):
-		while 1:
-			CONSUMER_SECRET = input('\nEnter your Consumer Secret: ')
-			if CONSUMER_SECRET == '':
-				print("You must enter a Consumer Secret!")
-			else:
-				print ("Consumer Secret: ", CONSUMER_SECRET)
-				confirm = input('Is this correct? (Y / N): ')
-				if confirm == 'Y' or confirm == 'y':
-					break
-		self.CONSUMER_SECRET = CONSUMER_SECRET
+Try moving cred methods and assign as variables
 
-	def get_Access_Token(self):
-		while 1:
-			ACCESS_TOKEN = input('\nEnter your Access Token: ')
-			if ACCESS_TOKEN == '':
-				print('You must enter an Access Token!')
-			else:
-				print('Access Token: ', ACCESS_TOKEN)
-				confirm = input('Is this correct? (Y / N): ')
-				if confirm == 'Y' or confirm == 'y':
-					break
-		self.ACCESS_TOKEN = ACCESS_TOKEN
 
-	def get_Access_Secret(self):
-		while 1:
-			ACCESS_SECRET = input('\nEnter your Access Secret: ')
-			if ACCESS_SECRET == '':
-				print('You must enter an Access Secret!')
-			else:
-				print('Access Secret: ', ACCESS_SECRET)
-				confirm = input('Is this correct? (Y / N): ')
-				if confirm == 'Y' or confirm == 'y':
-					break
-		self.ACCESS_SECRET = ACCESS_SECRET
+"""
+#CONSUMER_KEY = input('\nEnter your Consumer Key: ')
 
-	def encrypt_input(self, input_data):
-		padding = '{'
-		iv = Random.new().read(AES.block_size)
-		cipher = AES.new(key, AES.MODE_CFB, iv)
-		self.input_data = iv + cipher.encrypt(b'input')
-		return input_data
 
-	def get_Filepath(self):
-		FILEPATH = input("\nEnter the path where you would like "
-				  "to save your encrypted credentials. \n"
-				  "(OR Press Enter to save to ~/Documents/creds/cot.txt): ")
-		if FILEPATH == '':
-			self.FILEPATH = '~/Documents/creds/cot.txt'
-		else:
-			self.FILEPATH = FILEPATH 
+
+#	def __init__(self, plain_text):
+#		self.plain_text = plain_text
+
+		#self.cipher_text = cipher_text
+
+
+
+
+
+
+
+
+
+
+
+		#self.input_data = iv + cipher.encrypt(b'input')
 
 
 
 
 if __name__ == '__main__':
 	
-#	def __init__(self, CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET, input):
-#			padding = '{'
-#	iv = Random.new().read(AES.block_size)
-#	cipher = AES.new(key, AES.MODE_CFB, iv)
-#	self.input = iv + cipher.encrypt(b'input')
-
 	def banner():
 		print("")
 		print(pyfiglet.figlet_format("                                @   ", font = "octal"))
@@ -121,14 +75,115 @@ if __name__ == '__main__':
 		  "and saved to a file. \n\n")
 
 
-	print(banner())
-	cred = APIcred()
-	cred.get_Filepath()	
-	cred.get_Consumer_Key()
-	cred.get_Consumer_Secret()	
-	cred.get_Access_Token()
-	cred.get_Access_Secret()
+
+	def get_Filepath():
+		FILEPATH = input("\nEnter the path where you would like "
+				  "to save your encrypted credentials. \n"
+				  "(OR Press Enter to save to ~/Documents/creds/cot.txt): ")
+		if FILEPATH == '':
+			FILEPATH = '~/Documents/creds/cot.txt'
+		else:
+			return FILEPATH 
+
+
+	def get_Consumer_Key():
+		while 1:
+			CONSUMER_KEY = input('\nEnter your Consumer Key: ')
+			if CONSUMER_KEY == "":
+				print("You must enter the Consumer Key!")
+			else:
+				print ("Consumer Key: ", CONSUMER_KEY)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
+		return CONSUMER_KEY 
+		
 	
+	def get_Consumer_Secret():
+		while 1:
+			CONSUMER_SECRET = input('\nEnter your Consumer Secret: ')
+			if CONSUMER_SECRET == '':
+				print("You must enter a Consumer Secret!")
+			else:
+				print ("Consumer Secret: ", CONSUMER_SECRET)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
+		return CONSUMER_SECRET
+
+
+	def get_Access_Token():
+		while 1:
+			ACCESS_TOKEN = input('\nEnter your Access Token: ')
+			if ACCESS_TOKEN == '':
+				print('You must enter an Access Token!')
+			else:
+				print('Access Token: ', ACCESS_TOKEN)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
+		return ACCESS_TOKEN
+
+
+	def get_Access_Secret():
+		while 1:
+			ACCESS_SECRET = input('\nEnter your Access Secret: ')
+			if ACCESS_SECRET == '':
+				print('You must enter an Access Secret!')
+			else:
+				print('Access Secret: ', ACCESS_SECRET)
+				confirm = input('Is this correct? (Y / N): ')
+				if confirm == 'Y' or confirm == 'y':
+					break
+		return ACCESS_SECRET
+
+
+	def encrypted_input(pt_input):
+		key = b'pt_input'
+		iv = Random.new().read(AES.block_size)
+		cipher = AES.new(key, AES.MODE_CFB, iv)
+		ct_output = iv + cipher.encrypt(b'pt_input')
+		return ct_output
+
+
+	print(banner())
+	FILEPATH = get_Filepath()
+	CONSUMER_KEY = get_Consumer_Key()
+	CONSUMER_SECRET = get_Consumer_Secret()
+	ACCESS_TOKEN = get_Access_Token()
+	ACCESS_SECRET = get_Access_Secret()
+
+	e_CONSUMER_KEY = encrypted_input(CONSUMER_KEY)
+	print(e_CONSUMER_KEY)
+
+
+	#CONSUMER_KEY = APIcred(conkey)
+
+
+	#print(APIcred.plain_text)
+
+
+
+
+	#cons = APIcred(APIcred.get_Consumer_Key)
+	
+	#APIcred.get_Consumer_Key()
+	#cred = APIcred()
+
+	#ckey = APIcred(get_Consumer_Key(), 1)
+	#cred.get_Filepath()	
+	
+	#cred.get_Consumer_Secret()	
+	#cred.get_Access_Token()
+	#cred.get_Access_Secret()
+	
+	#print(cons.get_Consumer_Key)
+
+	#APIcred.CONSUMER_KEY
+
+	#print(wtf)
+	#print(cred)
+
 
 
 #	CONSUMER_KEY_input = input('Enter your Consumer Key: ')
